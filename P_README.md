@@ -29,7 +29,7 @@ This only stores the relative filepath to your base music directory in each file
 To install, download the two scripts `plainplay`/`resolve_cmd_plainplay` and put it on your `$PATH` somewhere, e.g.:
 
 ```sh
-git clone https://github.com/seanbreckenridge/plaintext-playlist
+git clone https://github.com/purarue/plaintext-playlist
 cd plaintext-playlist
 cp plainplay resolve_cmd_plainplay ~/.local/bin
 ```
@@ -37,7 +37,7 @@ cp plainplay resolve_cmd_plainplay ~/.local/bin
 Could also use [`basher`](https://github.com/basherpm/basher):
 
 ```bash
-basher install seanbreckenridge/plaintext-playlist
+basher install purarue/plaintext-playlist
 ```
 
 Requires at least `bash` version 4.0.
@@ -87,7 +87,7 @@ cd ~/Music && play listall $(plainplay playlistdir)/* | grep -i 'mario' | mpv --
 
 Additionally, since this is just lines of text, you're free to turn the `playlistdir` into a git-tracked directory; I push to a private git repo periodically just so I have this backed up:
 
-![](https://raw.githubusercontent.com/seanbreckenridge/plaintext-playlist/master/.github/playlists_git.png)
+![](https://raw.githubusercontent.com/purarue/plaintext-playlist/master/.github/playlists_git.png)
 
 I have lots of aliases I use to selectively play songs from my playlists ([`functions.sh`](./functions.sh)):
 
@@ -106,23 +106,23 @@ To create an archive of a playlist, (when in your top-level Music directory) can
 
 As some more complicated examples of what this enables me to do:
 
-I use `mpv`'s IPC sockets (see my [`mpv-sockets`](https://github.com/seanbreckenridge/mpv-sockets) scripts) to to send commands to the currently running `mpv` instance. The `mpv-currently-playing` script from there prints the path of the currently playing song. Whenever I'm listening to an album and I want to add a song to a playlist, I do `plainplay curplaying`, it drops me into `fzf` to pick a playlist, and it adds the song that's currently playing to whatever I select.
+I use `mpv`'s IPC sockets (see my [`mpv-sockets`](https://github.com/purarue/mpv-sockets) scripts) to to send commands to the currently running `mpv` instance. The `mpv-currently-playing` script from there prints the path of the currently playing song. Whenever I'm listening to an album and I want to add a song to a playlist, I do `plainplay curplaying`, it drops me into `fzf` to pick a playlist, and it adds the song that's currently playing to whatever I select.
 
-[`not-in-playlist`](https://github.com/seanbreckenridge/plaintext_playlist_py/blob/master/bin/not-in-playlist), which I use to find any albums in my music directory which don't have any songs in any of my playlists, i.e. pick a random album in my music directory I haven't listened to yet.
+[`not-in-playlist`](https://github.com/purarue/plaintext_playlist_py/blob/master/bin/not-in-playlist), which I use to find any albums in my music directory which don't have any songs in any of my playlists, i.e. pick a random album in my music directory I haven't listened to yet.
 
 #### Syncing music and playlists to my phone
 
-[`linkmusic`](https://github.com/seanbreckenridge/plaintext_playlist_py/blob/master/bin/linkmusic) is a `rsync`-like script which creates hardlinks for every file in my playlists into a separate directory (e.g., `~/.local/share/musicsync/`). Then, I use [`syncthing`](https://github.com/syncthing/syncthing) to sync all the songs in my playlists across my computers/onto my phone, without syncing my entire music collection
+[`linkmusic`](https://github.com/purarue/plaintext_playlist_py/blob/master/bin/linkmusic) is a `rsync`-like script which creates hardlinks for every file in my playlists into a separate directory (e.g., `~/.local/share/musicsync/`). Then, I use [`syncthing`](https://github.com/syncthing/syncthing) to sync all the songs in my playlists across my computers/onto my phone, without syncing my entire music collection
 
 On my phone (android), I use [`foobar2000`](https://www.foobar2000.org/apk), which accepts `m3u8` files as playlists. So, using the `plainplay m3u` command, I can [re-create the `m3u8` files](https://sean.fish/d/create_playlists.job?dark) in my top-level music directory on my phone, which foobar can then use:
 
 <img src="./.github/phone_playlists.png" width="400" />
 
-To shuffle the `m3u8` files, I wrote a separate tool [`m3u-shuf`](https://github.com/seanbreckenridge/m3u-shuf)
+To shuffle the `m3u8` files, I wrote a separate tool [`m3u-shuf`](https://github.com/purarue/m3u-shuf)
 
-An example of me getting the [music/playlist configuration/paths to work across devices](https://github.com/seanbreckenridge/dotfiles/blob/23e18977a15b3fa4a968626bd3655a7a2a6c8a88/.profile#L79-L104) (`XDG_MUSIC_DIR` and `PLAINTEXT_PLAYLIST_PLAYLISTS`)
+An example of me getting the [music/playlist configuration/paths to work across devices](https://github.com/purarue/dotfiles/blob/23e18977a15b3fa4a968626bd3655a7a2a6c8a88/.profile#L79-L104) (`XDG_MUSIC_DIR` and `PLAINTEXT_PLAYLIST_PLAYLISTS`)
 
-Python library [here](https://github.com/seanbreckenridge/plaintext_playlist_py) which has code to glob the `.txt` files from `plaintext-playlist`, as well as a couple other misc scripts, like [validating id3 data](https://github.com/seanbreckenridge/plaintext_playlist_py/blob/master/bin/id3stuff), or [removing private (amazon/gracenote) id3 frames](https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/mpv-clean-priv-frames) using data saved by [`mpv-history-daemon`](https://github.com/seanbreckenridge/mpv-history-daemon)
+Python library [here](https://github.com/purarue/plaintext_playlist_py) which has code to glob the `.txt` files from `plaintext-playlist`, as well as a couple other misc scripts, like [validating id3 data](https://github.com/purarue/plaintext_playlist_py/blob/master/bin/id3stuff), or [removing private (amazon/gracenote) id3 frames](https://github.com/purarue/HPI-personal/blob/master/scripts/mpv-clean-priv-frames) using data saved by [`mpv-history-daemon`](https://github.com/purarue/mpv-history-daemon)
 
 ### Specification
 

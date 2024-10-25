@@ -1,5 +1,5 @@
 #!/bin/zsh
-# https://github.com/seanbreckenridge/plaintext-playlist.git
+# https://github.com/purarue/plaintext-playlist.git
 # --msg-level=file=error removes the 'reading from stdin...' info message
 alias mpv-from-stdin='mpv --playlist=- --no-audio-display --msg-level=file=error'
 alias mpv-shuffle='mpv-from-stdin --shuffle'
@@ -14,7 +14,7 @@ alias splayall='fd . "$PLAINTEXT_PLAYLIST_PLAYLISTS" -X plainplay shuffleall'
 # list/play all music that matches 'rg' pattern
 playrg_f() {
 	cm
-	# https://github.com/seanbreckenridge/seanb-utils/blob/main/shellscripts/unique
+	# https://github.com/purarue/pura-utils/blob/main/shellscripts/unique
 	fd . "$(plainplay playlistdir)" --type file -X cat | unique | rg -i "$*"
 }
 # play all paths that match whatever I pass as positional arguments

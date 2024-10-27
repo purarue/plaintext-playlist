@@ -50,7 +50,7 @@ Stores configuration (playlists) at `PLAINTEXT_PLAYLIST_PLAYLISTS` (defaults to 
 
 You must set `PLAINTEXT_PLAYLIST_MUSIC_DIR` as an environment variable, which defines your 'root' music directory. If you don't have one place you keep all your music, you can set your `$HOME` directory, or `/`, which would cause the playlist files to use absolute paths instead. However, that would make the `resolve` function work very slowly, since it would have to search your entire system to find paths to match broken paths against.
 
-For `zsh` completion support, see [here](https://sean.fish/d/_plainplay).
+For `zsh` completion support, see [here](https://purarue.xyz/d/_plainplay).
 
 ### Basic Scripting
 
@@ -114,7 +114,7 @@ I use `mpv`'s IPC sockets (see my [`mpv-sockets`](https://github.com/purarue/mpv
 
 [`linkmusic`](https://github.com/purarue/plaintext_playlist_py/blob/master/bin/linkmusic) is a `rsync`-like script which creates hardlinks for every file in my playlists into a separate directory (e.g., `~/.local/share/musicsync/`). Then, I use [`syncthing`](https://github.com/syncthing/syncthing) to sync all the songs in my playlists across my computers/onto my phone, without syncing my entire music collection
 
-On my phone (android), I use [`foobar2000`](https://www.foobar2000.org/apk), which accepts `m3u8` files as playlists. So, using the `plainplay m3u` command, I can [re-create the `m3u8` files](https://sean.fish/d/create_playlists.job?dark) in my top-level music directory on my phone, which foobar can then use:
+On my phone (android), I use [`foobar2000`](https://www.foobar2000.org/apk), which accepts `m3u8` files as playlists. So, using the `plainplay m3u` command, I can [re-create the `m3u8` files](https://purarue.xyz/d/create_playlists.job?dark) in my top-level music directory on my phone, which foobar can then use:
 
 <img src="./.github/phone_playlists.png" width="400" />
 

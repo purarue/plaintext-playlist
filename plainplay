@@ -315,17 +315,32 @@ remove_music_dir() {
 }
 
 # checks a playlist file for broken paths
+# this prints in vim quickfix compatible format, so you could do:
+# nvim -q <(plainplay check)
+# if there were any errors and then use the quickfix (':help quickfix')
+# to cycle through all of them
 check_playlist() {
-	local playlistToCheck ret songFullPath
+	local playlistToCheck ret songFullPath line
 	playlistToCheck="$1"
 	ret=0
-	printf "Checking '%s'...\n" "${playlistToCheck}"
+	line=1
+	# printf "Checking '%s'...\n" "${playlistToCheck}"
 	while read -r song; do
 		songFullPath="${MusicDir%/}/${song}"
 		[[ -e "${songFullPath}" ]] || {
 			ret=1
-			printf "Error: '%s' doesn't exist\n" "${songFullPath}" 1>&2
+			printf "%s:%d: '%s' doesn't exist\n" "$playlistToCheck" "$line" "${songFullPath}"
 		}
+		[[ -d "${songFullPath}" ]] && {
+			ret=1
+			printf "%s:%d: '%s' is a directory\n" "$playlistToCheck" "$line" "${songFullPath}"
+		}
+		# check if file is a common image format
+		[[ "${song}" =~ \.(jpg|jpeg|png|webp)$ ]] && {
+			ret=1
+			printf "%s:%d: '%s' is an image\n" "$playlistToCheck" "$line" "${songFullPath}"
+		}
+		((line++))
 	done <"${playlistToCheck}"
 	return "${ret}"
 }

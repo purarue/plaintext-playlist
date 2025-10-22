@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -e
+
+plainplay check
+plainplay resolve

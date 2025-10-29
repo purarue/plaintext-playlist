@@ -28,3 +28,7 @@ alias 'playrg-=cm; playrg-_f'
 # fzf to play music
 alias playfzf='cm; rg --color never --with-filename --no-heading "" "${PLAINTEXT_PLAYLIST_PLAYLISTS}/"*.txt | sed -e "s|^${PLAINTEXT_PLAYLIST_PLAYLISTS}/||" | fzf'
 alias 'playfzf-=playfzf | cut -d":" -f2- | mpv-from-stdin'
+playrg-curdir() {
+	local curdir="$(basename "$(realpath "$(pwd)")")"
+	playrg- "$curdir"
+}

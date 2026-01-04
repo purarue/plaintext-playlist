@@ -32,3 +32,13 @@ playrg-curdir() {
 	local curdir="$(basename "$(realpath "$(pwd)")")"
 	playrg- "$curdir"
 }
+
+# open next ep, close the current one and trash it
+next() {
+	local old_socket
+	mpv-next-ep || return $?
+	old_socket="$(mpv-currently-playing --socket | head -n1)"
+	[[ -n "$old_socket" ]] && trash-put "$(mpv-currently-playing | head -n1)"
+	mpv-communicate "$old_socket" quit
+	trakt-watch progress
+}

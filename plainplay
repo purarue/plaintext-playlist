@@ -15,6 +15,7 @@ declare MusicDir=
 declare ReadInputType=MULTI_SELECT_FZF
 declare ResolveAutoConfirm=
 declare M3uMode=RELATIVE
+declare M3uPrefix=''
 declare M3uIncludeDuration=0
 declare Action=
 declare ActivePlaylist=
@@ -103,9 +104,15 @@ Additional Flags:
 	m3u: --abs to use absolute paths for the generated m3u file,
 	instead of paths relative to your Music directory
 
+	e.g. plainplay --abs --duration m3u rock
+
 	m3u: --duration to include the duration in the m3u file
 
-	e.g. plainplay --abs --duration m3u rock
+	m3u: --m3u-prefix <PATH_PREFIX> to prepend some relative path
+	to the beginning of the playlist items. For example, if your playlists
+	are stored in a different directory:
+
+	e.g. plainplay --m3u-prefix '../../Music' m3u rock
 
 EOF
 	commands_list
@@ -160,6 +167,13 @@ parse_args() {
 			;;
 		--auto-confirm)
 			ResolveAutoConfirm="--auto-confirm"
+			;;
+		--m3u-prefix)
+			if [[ -z "$2" ]]; then
+				abort '--m3u-prefix requires an argument, e.g. --m3u-prefix "../Music"'
+			fi
+			M3uPrefix="$2"
+			shift
 			;;
 		--abs)
 			M3uMode=ABSOLUTE
@@ -505,7 +519,7 @@ run_plaintext_playlist() {
 			if [[ "${M3uMode}" == 'ABSOLUTE' ]]; then
 				filepaths+=("${MusicDir%/}/${song}")
 			else
-				filepaths+=("${song}")
+				filepaths+=("${M3uPrefix}${song}")
 			fi
 		done < <(cd "${MusicDir}" && safe_concat)
 		printf '#EXTM3U\n'

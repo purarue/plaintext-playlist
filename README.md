@@ -31,9 +31,15 @@ Additional Flags:
 	m3u: --abs to use absolute paths for the generated m3u file,
 	instead of paths relative to your Music directory
 
+	e.g. plainplay --abs --duration m3u rock
+
 	m3u: --duration to include the duration in the m3u file
 
-	e.g. plainplay --abs --duration m3u rock
+	m3u: --m3u-prefix <PATH_PREFIX> to prepend some relative path
+	to the beginning of the playlist items. For example, if your playlists
+	are stored in a different directory:
+
+	e.g. plainplay --m3u-prefix '../../Music' m3u rock
 
 add [playlist]                | Adds one or more songs to a playlist
 curplaying [playlist]         | Adds a currently playing mpv song to a playlist
@@ -168,6 +174,19 @@ alias 'playrg-=cm; playrg-_f'
 # fzf to play music
 alias playfzf='cm; rg --color never --with-filename --no-heading "" "${PLAINTEXT_PLAYLIST_PLAYLISTS}/"*.txt | sed -e "s|^${PLAINTEXT_PLAYLIST_PLAYLISTS}/||" | fzf'
 alias 'playfzf-=playfzf | cut -d":" -f2- | mpv-from-stdin'
+playrg-curdir() {
+	local curdir="$(basename "$(realpath "$(pwd)")")"
+	playrg- "$curdir"
+}
+# open next ep, close the current one and trash it
+next() {
+	local old_socket
+	mpv-next-ep || return $?
+	old_socket="$(mpv-currently-playing --socket | head -n1)"
+	[[ -n "$old_socket" ]] && trash-put "$(mpv-currently-playing | head -n1)"
+	mpv-communicate "$old_socket" quit
+	trakt-watch progress
+}
 ```
 
 To create an archive of a playlist, (when in your top-level Music directory) can use tar like:
